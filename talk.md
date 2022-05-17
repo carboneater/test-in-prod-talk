@@ -32,6 +32,7 @@ Pourquoi. Comment. Comment Pas.
 
 ## ToC
 
+- Tester en Prod?
 - Pourquoi
 - Comment
 
@@ -40,6 +41,10 @@ Pourquoi. Comment. Comment Pas.
 ## $ whoami
 
 <!-- .slide: data-background="imgs/lightbulb.gif" -->
+
+---
+
+<!-- .slide: data-background="imgs/idontalwaystestmycode.jpg" -->
 
 ---
 
@@ -65,7 +70,7 @@ Pourquoi. Comment. Comment Pas.
 | Pros           | Cons            |
 |----------------|-----------------|
 | Vitesse + + -  | Stabilité + - - |
-| Multiples Devs |                 |
+|                | DB de Prod      |
 
 --
 
@@ -76,7 +81,7 @@ Pourquoi. Comment. Comment Pas.
 | Pros           | Cons                |
 |----------------|---------------------|
 | Vitesse + = -  | Stabilité + + ?     |
-| Multiples Devs | Works on my Machine |
+|                | Works on my Machine |
 
 --
 
@@ -87,27 +92,66 @@ Pourquoi. Comment. Comment Pas.
 - Secret?
 - Data-Driven Behavior?
 - Pipeline?
+- ... ?
 
 ---
 
 # Comment?
 
+<img src="imgs/DevOpsLoop.png" />
+
+---
+
+# Comment?
+
+- Qu'est-ce qu'un test?
 - Architecture du projet
 - Qu'est-ce que je veux tester?
 
 ---
 
-## Architecture
+## Qu'est-ce qu'un test?
 
-Programmes Interractifs vs Non-Interractifs
+<img src="imgs/DevOpsLoop.png"/>
 
-- Aucune interractivité
-- Interractivité partielle
-- Interractivité complète
+_*La longueur des segments n'est pas à l'échelle avec leur durée_
+
+--
+
+## Qu'est-ce qu'un test?
+
+<img src="imgs/compile_test1.png" />
+
+--
+
+## Qu'est-ce qu'un test?
+
+<img src="imgs/opentelemetry-icon-color.png" width="256"/>
+<img src="imgs/prometheus.png" width="256"/>
+<br/>
+<img src="imgs/Grafana_logo.png" width="256" />
+<img src="imgs/loki.png" width="256" />
+<img src="imgs/tempo.png" width="256" />
+
+--
+
+## Qu'est-ce qu'un test?
+
+<!-- .slide: data-background="imgs/phone.png" -->
 
 ---
 
-### Programmes Non-Interractifs
+## Architecture
+
+Programmes Interactifs vs Non-Interactifs
+
+- Aucune interactivité
+- Interactivité partielle
+- Interactivité complète
+
+--
+
+### Programmes Non-Interactifs
 
 ```mermaid
 graph LR
@@ -123,9 +167,9 @@ end
 T -.-> Deploy
 ```
 
----
+--
 
-### Programmes Interractifs
+### Programmes Interactifs
 
 ```mermaid
 flowchart LR
@@ -161,6 +205,73 @@ E2E -.-> SD & SW
 SE2E -.-> PD & PW
 ```
 
+--
+
+### Programmes Semi-Interactifs
+
+```mermaid
+flowchart LR
+
+subgraph CI
+    B[Build]
+    T[Unit + Integration Tests]
+    L[Launch Service]
+    W[Wait-On Service]
+
+    B & T --> L & W
+end
+
+subgraph Staging
+    SD[Deploy]
+    SW[Wait-On Service]
+end
+
+subgraph Prod
+    PD[Deploy]
+    PW[Wait-On Service]
+end
+
+W -.-> SD & SW
+SW -.-> PD & PW
+```
+
+--
+
+### Interactivité
+
+```mermaid
+sequenceDiagram
+
+participant E as Emulator
+participant A as Board
+participant U as GPS
+participant J as GenX/J
+participant T as GenX/TS
+participant M as Message Bus
+
+E ->> +M: Register on Position Event Channel
+
+Note Over E: Generate Test Payload
+activate E
+E ->> +A: Transmit Payload
+Note over A: UUEncode
+A ->> +U: Transmit
+deactivate A
+U ->> +J: Transmit OtA
+deactivate U
+Note over J: Decode Message
+J ->> +T: Handoff
+deactivate J
+Note over T: Parse Payload
+Note over T: Save
+T ->> +M: Emit Position
+deactivate T
+M ->> E: Position
+deactivate M
+Note over E: Compare Position / Payload
+
+```
+
 ---
 
 ### Quels tests?
@@ -172,3 +283,4 @@ SE2E -.-> PD & PW
 ### Quels Tests?
 
 - E2E
+- Lifetime
