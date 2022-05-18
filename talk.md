@@ -10,19 +10,17 @@ Pourquoi. Comment. Comment Pas.
 
 ### Précédemment aux TechnoDrinks
 
-<img src="imgs/stryker.png" width="256" />
+<img src="imgs/stryker.png" width="128" />
 <br/>
-
-<img src="imgs/drone-logo-png-dark-256.png" width="256" />
-<img src="imgs/semantic-release-logo.svg" width="256" />
-<img src="imgs/renovate.png" width="256" />
+<img src="imgs/drone-logo-png-dark-256.png" width="128" />
+<img src="imgs/semantic-release-logo.svg" width="128" />
+<img src="imgs/renovate.png" width="128" />
 <br/>
+<img src="imgs/Grafana_logo.png" width="128" />
+<img src="imgs/loki.png" width="128" />
+<img src="imgs/verdaccio.png" width="128" />
 
-<img src="imgs/Grafana_logo.png" width="256" />
-<img src="imgs/loki.png" width="256" />
-<img src="imgs/verdaccio.png" width="256" />
-
----
+--
 
 ### Précédemment aux TechnoDrinks
 
@@ -44,16 +42,11 @@ Pourquoi. Comment. Comment Pas.
 
 ---
 
-<!-- .slide: data-background="imgs/testercestdouter.jpg" -->
+<img src="imgs/testercestdouter.jpg" height="600" />
 
----
+--
 
-<!-- .slide: data-background="imgs/idontalwaystestmycode.jpg" -->
-<img src="imgs/idontalwaystestmycode.jpg" width="600"/>
-
----
-
-<!-- .slide: data-background="imgs/breaking-prod.png" -->
+<img src="imgs/idontalwaystestmycode.jpg" height="600"/>
 
 ---
 
@@ -103,12 +96,6 @@ Pourquoi. Comment. Comment Pas.
 
 # Comment?
 
-<img src="imgs/DevOpsLoop.png" />
-
----
-
-# Comment?
-
 - Qu'est-ce qu'un test?
 - Architecture du projet
 - Qu'est-ce que je veux tester?
@@ -120,12 +107,6 @@ Pourquoi. Comment. Comment Pas.
 <img src="imgs/DevOpsLoop.png"/>
 
 _*La longueur des segments n'est pas à l'échelle avec leur durée_
-
---
-
-## Qu'est-ce qu'un test?
-
-<img src="imgs/compile_test1.png" />
 
 --
 
@@ -281,7 +262,7 @@ Note over E: Compare Position / Payload
 
 ## Comment Tester
 
-<img src="imgs/thinkingcap.png"/>
+<img src="imgs/thinkingcap.png" height="600"/>
 
 ---
 
@@ -295,7 +276,9 @@ Note over E: Compare Position / Payload
 
 ### Lifetime Tests: /-/ready
 
-`npx wait-on -t 30000 https://service.url.tld/-/ready`
+```
+npx wait-on -t 30000 https://service.url.tld/-/ready
+```
 
 https://www.npmjs.com/package/wait-on
 
@@ -313,7 +296,7 @@ participant d as DB
 c ->> +w: GET /position/x
 w ->> +d: SELECT x;
 d ->> -w: result: X
-w ->> -c: 200 / 404
+w ->> -c: 200 / 500
 
 ```
 
@@ -321,7 +304,7 @@ w ->> -c: 200 / 404
 
 ## Quels tests?
 
-<img src="imgs/compile_test1.png" />
+<img src="imgs/compile_test1.png" height="600" />
 
 --
 
@@ -336,7 +319,18 @@ w ->> -c: 200 / 404
 
 - Entités dédiées?
 - Safe Operations?
-- 
+- Modes d'échecs?
+- Architecture?
+
+---
+
+#### Autres exemples de tests au déploiement
+
+- SLOs
+- Load / Performance Testing
+- A/B /  Blue/Green Testing
+- Canaries
+- Feature Flags
 
 ---
 
