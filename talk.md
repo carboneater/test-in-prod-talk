@@ -44,7 +44,12 @@ Pourquoi. Comment. Comment Pas.
 
 ---
 
+<!-- .slide: data-background="imgs/testercestdouter.jpg" -->
+
+---
+
 <!-- .slide: data-background="imgs/idontalwaystestmycode.jpg" -->
+<img src="imgs/idontalwaystestmycode.jpg" width="600"/>
 
 ---
 
@@ -274,13 +279,67 @@ Note over E: Compare Position / Payload
 
 ---
 
-### Quels tests?
+## Comment Tester
+
+<img src="imgs/thinkingcap.png"/>
+
+---
+
+## Quels Tests?
+
+- Lifetime
+    - /-/ready
+    - /-/healthy
+
+--
+
+### Lifetime Tests: /-/ready
+
+`npx wait-on -t 30000 https://service.url.tld/-/ready`
+
+https://www.npmjs.com/package/wait-on
+
+--
+
+### Lifetime Tests: /-/healthy
+
+```mermaid
+sequenceDiagram
+
+participant c as Checker
+participant w as Web
+participant d as DB
+
+c ->> +w: GET /position/x
+w ->> +d: SELECT x;
+d ->> -w: result: X
+w ->> -c: 200 / 404
+
+```
+
+---
+
+## Quels tests?
 
 <img src="imgs/compile_test1.png" />
 
 --
 
-### Quels Tests?
+## Quels Tests?
 
-- E2E
 - Lifetime
+- E2E
+
+--
+
+### E2e Tests
+
+- Entités dédiées?
+- Safe Operations?
+- 
+
+---
+
+# Questions?
+
+https://github.com/carboneater/
